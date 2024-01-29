@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Weather Lookup App</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div id="root">
+      <div id="quote_header"></div>
+      <h1>Weather Lookup App</h1>
+      <form id="weatherForm">
+        <input
+          type="text"
+          placeholder="Enter city name"
+          id="cityInput"
+        />
+        <button type="button" id="submitButton">Get Weather</button>
+      </form>
+      <div id="weatherContainer">
+        <div id="loadingMessage">Loading weather data...</div>
+      </div>
+    </div>
+    <script src="weather.js"></script>
+  </body>
+</html>
