@@ -1,58 +1,27 @@
-// Required parts to this Fetch() API project
-// 1. Fetch() API
-// 2. DOM Manipulation
-// 3. Event Listeners
-// 4. Local Storage
-// 5. .json() method
-// 6. .then() method
-// 7. Promise.all() and Promise.any() methods
-// 8. Use async and await keywords
-// 9. A function that uses web-workers to convert celcius to fahrenheit 
-
 // Initialization of DOM elements
 const cityInput = document.getElementById('cityInput');
 const submitButton = document.getElementById('submitButton');
 const weatherContainer = document.getElementById('weatherContainer');
-const quoteHeader = document.getElementById('quote_header'); // Change this to quote_header
 
-// Variables to store user input and weather data
+// Variable to store user input and weather data
 let city = '';
-let weatherData = null;
 
-// Function to fetch quotes from the ZenQuotes API
-const fetchQuotes = async () => {
-  const quotesUrl = "https://zenquotes.io/api/quotes/";
-
-  try {
-    const response = await fetch(quotesUrl);
-    if (!response.ok) throw new Error('Failed to fetch quotes');
-
-    const txt = await response.text();
-    console.log("Received quote:", txt);
-
-    quoteHeader.innerHTML += `<blockquote>${txt}</blockquote>`;
-  } catch (error) {
-    console.warn(error.message);
-  }
-};
-
+// Add your OpenWeatherMap API key here
+const openWeatherMapApiKey = 'YOUR_OPENWEATHERMAP_API_KEY';
 
 // Function to fetch weather data from the OpenWeatherMap API
 const fetchData = async () => {
-  // Construct the weather URL with the updated city
-  const weatherUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=ee9719cb63ae4b1ee948ea9b63a048bd`;
+  // Construct the weather URL with the updated city and the API key
+  const weatherUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${openWeatherMapApiKey}`;
 
   try {
-    const [weatherResponse, _] = await Promise.all([
-      fetch(weatherUrl),
-      fetchQuotes() // Fetch quotes concurrently
-    ]);
+    const response = await fetch(weatherUrl);
 
-    if (!weatherResponse.ok) {
+    if (!response.ok) {
       throw new Error('Failed to fetch weather data');
     }
 
-    const weatherData = await weatherResponse.json();
+    const weatherData = await response.json();
     renderWeather(weatherData); // Call the function to update the UI with the fetched data
     console.log(weatherData);
   } catch (error) {
@@ -111,7 +80,3 @@ submitButton.addEventListener('click', handleSubmit);
 
 // Initial data fetch on page load
 fetchData();
-
-
-
-
